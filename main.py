@@ -2,6 +2,7 @@
 import random
 import pygame as pg
 
+
 # --CONSTANTS--
 # COLOURS
 WHITE = (255, 255, 255)
@@ -31,15 +32,8 @@ class Player(pg.sprite.Sprite):
         self.change_x = 0
         self.change_y = 0
 
-        
-
-        
-        
-
        
     def update(self):
-        
-        
         
         # kills the snake if it touches the border
         if self.rect.top < 0:
@@ -59,7 +53,7 @@ class Player(pg.sprite.Sprite):
         # changes direction when going left side
         self.change_x = -3
         self.change_y = 0
-        
+
  
     def go_right(self):
         # changes direction when going right side
@@ -90,11 +84,19 @@ class Apple(pg.sprite.Sprite):
 
     def update(self):
         pass
-    
 
 
+class Background(pg.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image1 = pg.Surface((25,25))
+        self.image1.fill(GRAY)
+        self.image2 = pg.Surface((25,25))
+        self.image2.fill(BLACK)
 
-         
+    def update(self):
+        pass
+      
 def start():
     """Environment Setup and Game Loop"""
 
@@ -112,8 +114,10 @@ def start():
 
     apple = Apple()
 
+    background = Background()
+
     
-    all_sprites.add(player, apple)
+    all_sprites.add(player, apple, background)
 
     
 
@@ -141,31 +145,8 @@ def start():
                 if event.key == pg.K_s:
                     player.go_down()
                     
-            
-                
- 
- 
-            
-            
-            
-            
-            
-            
-            
-
-            
-
         # --- Update the world state
         all_sprites.update()
-
-        
-
-       
-
-        
-        
-        
-            
 
         # --- Draw items
         screen.fill(BLACK)
