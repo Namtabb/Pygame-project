@@ -85,17 +85,6 @@ class Apple(pg.sprite.Sprite):
     def update(self):
         pass
 
-
-class Background(pg.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.image1 = pg.Surface((25,25))
-        self.image1.fill(GRAY)
-        self.image2 = pg.Surface((25,25))
-        self.image2.fill(BLACK)
-
-    def update(self):
-        pass
       
 def start():
     """Environment Setup and Game Loop"""
@@ -114,10 +103,8 @@ def start():
 
     apple = Apple()
 
-    background = Background()
-
     
-    all_sprites.add(player, apple, background)
+    all_sprites.add(player, apple)
 
     
 
