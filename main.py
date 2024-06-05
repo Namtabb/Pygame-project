@@ -14,8 +14,8 @@ GRAY = (128, 128, 128)
 
 NUM_ENEMIES = 3
 
-WIDTH = 720
-HEIGHT = 480
+WIDTH = 550
+HEIGHT = 550
 SCREEN_SIZE = (WIDTH, HEIGHT)
 
 
@@ -31,40 +31,50 @@ class Player(pg.sprite.Sprite):
         self.change_x = 0
         self.change_y = 0
 
-        self.rect.centerx = random.randrange(0, WIDTH + 1)
+        
+
+        
+        
 
        
     def update(self):
+        
+        
+        
         # kills the snake if it touches the border
         if self.rect.top < 0:
             Player.kill(self)
-        if self.rect.bottom > 480:
+        if self.rect.bottom > 550:
             Player.kill(self)
         if self.rect.left < 0:
             Player.kill(self)
-        if self.rect.right > 720:
+        if self.rect.right > 550:
             Player.kill(self)
 
 
         self.rect.x += self.change_x
         self.rect.y += self.change_y
-    
+    # following functions for movement
     def go_left(self):
         # changes direction when going left side
         self.change_x = -3
+        self.change_y = 0
+        
  
     def go_right(self):
         # changes direction when going right side
         self.change_x = 3
+        self.change_y = 0
  
     def go_down(self):
         # changes direction when going down
         self.change_y = 3
+        self.change_x = 0
     
     def go_up(self):
         #changes direction when going up
         self.change_y = -3
-
+        self.change_x = 0
     
 
 class Apple(pg.sprite.Sprite):
@@ -75,11 +85,11 @@ class Apple(pg.sprite.Sprite):
         self.image.fill(RED)
         self.rect = self.image.get_rect()
 
-        self.rect.centerx = random.randrange(0, WIDTH + 1)
+        self.rect.centerx = random.randrange(0, 550)
+        
 
     def update(self):
-        apple_position = [random.randrange(1, (WIDTH//10)) * 10, 
-                  random.randrange(1, (HEIGHT//10)) * 10]
+        pass
     
 
 
@@ -121,12 +131,18 @@ def start():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_a:
                     player.go_left()
+                    
                 if event.key == pg.K_d:
                     player.go_right()
+                    
                 if event.key == pg.K_w:
                     player.go_up()
+                    
                 if event.key == pg.K_s:
                     player.go_down()
+                    
+            
+                
  
  
             
