@@ -17,6 +17,7 @@ WIDTH = 550
 HEIGHT = 550
 SCREEN_SIZE = (WIDTH, HEIGHT)
 NUM_APPLES = 1
+NUM_SEGMENTS= 1
 
 
 class Player(pg.sprite.Sprite):
@@ -27,9 +28,7 @@ class Player(pg.sprite.Sprite):
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
         self.rect.topleft = (125,75)
-
-        self.grow = True
-
+        self.grow = False
         self.change_x = 0
         self.change_y = 0
 
@@ -67,8 +66,9 @@ class Player(pg.sprite.Sprite):
         self.change_x = 0
     
     def body_grow(self):
-        pass
+        self.grow = True
     
+
 
 class Apple(pg.sprite.Sprite):
     def __init__(self):
@@ -80,9 +80,6 @@ class Apple(pg.sprite.Sprite):
         #spawning the apple   
         self.rect.x = random.randrange(0, WIDTH, 25)
         self.rect.y = random.randrange(0, HEIGHT, 25)
-
-    def update(self):
-        pass
 
       
 def start():
@@ -101,6 +98,8 @@ def start():
     # All sprites go in this sprite Group
     all_sprites = pg.sprite.Group()
     apple_sprites = pg.sprite.Group()
+    snake_segment = pg.sprite.Group()
+    
 
     player = Player()
     
@@ -134,13 +133,26 @@ def start():
                     
                 if event.key == pg.K_s:
                     player.go_down()
+
+            
+
         # checks for apple and snake collision
         apples_collided = pg.sprite.spritecollide(player, apple_sprites, True)
 
+
         # prints the amount of apples eaten
         for apple in apples_collided:
-            apples_eaten += 1
-            
+            apples_eaten += 1 
+        
+        for i in apples_collided:
+            player.body_grow()
+            for _ in range(NUM_SEGMENTS):
+                player = Player()
+
+                all_sprites.add(player)
+                snake_segment.add(player)
+
+
          #spawns apple after eaten
         if len(apple_sprites) <= 0:
             for _ in range(NUM_APPLES):
@@ -155,7 +167,7 @@ def start():
         score_image = font.render(f"Score: {apples_eaten}", True, WHITE)
 
         
-        screen.blit(score_image, (25,25))
+        screen.blit(score_image, (5,5))
                 
         # --- Update the world state
         all_sprites.update()
